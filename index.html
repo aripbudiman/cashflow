@@ -1,0 +1,165 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Cashflow</title>
+</head>
+<body>
+    <section>
+        <div class="color"></div>
+        <div class="color"></div>
+        <div class="color"></div>
+        <div class="box">
+          <div class="container">
+            <div class="form">
+                <div class="menu-circle"></div>
+              <h2>Input Cashflow KBB</h2>
+              <form action="" name="cashflow-kbb">
+                <div class="inputBox">
+                    <select name="npetugas" id="">
+                        <option value="Senin">Sulaeman Afif</option>
+                        <option value="Selasa">Bani Nuzul Ramdhan</option>
+                        <option value="Rabu">Beni Iskandar</option>
+                        <option value="Kamis">Erni Lathifah</option>
+                        <option value="Kamis">Hendri Herdiansyah S</option>
+                        <option value="Kamis">Mohamad Saeful Ramdan</option>
+                        <option value="Kamis">Rian Andriani Aziz</option>
+                        <option value="Kamis">Tendi Agus Maulana</option>
+                  </select>
+                  </div>
+                <div class="inputBox">
+                  <select name="hpelayanan" id="">
+                      <option value="Senin">Senin</option>
+                      <option value="Selasa">Selasa</option>
+                      <option value="Rabu">Rabu</option>
+                      <option value="Kamis">Kamis</option>
+                </select>
+                </div>
+                <div class="inputBox">
+                  <input type="date" name="tpelayanan" placeholder="Tanggal Pelayanan">
+                </div>
+                <div class="inputBox1">
+                  <input type="text" name="nmajelis" placeholder="Nama Kelompok">
+                </div>
+                <div class="inputBox">
+                  <input type="text" name="mkasawal" placeholder="Modal Kas Awal">
+                </div>
+                <div class="inputBox">
+                  <input type="text" name="angikhtiar" placeholder="Angsuran Ikhtiar" oninput="hitungTotal()">
+                </div>
+                <div class="inputBox">
+                  <input type="text" name="angindividu" placeholder="Angsuran Individu" oninput="hitungTotal()">
+                </div>
+                <div class="inputBox">
+                  <input type="text" name="tangsuran" placeholder="Total Angsuran" id="tangsuran" readonly>
+                </div>
+                <div class="inputBox">
+                  <input type="text" name="tsukarela" placeholder="Tabungan Sukarela">
+                </div>
+                <div class="inputBox">
+                  <input type="text" name="tberencana" placeholder="Tabungan Berencana">
+                </div>
+                <div class="inputBox">
+                  <input type="text" name="swajib" placeholder="Simpanan Wajib">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="infaq" placeholder="Infaq">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="ka" placeholder="Kartu Angsuran/reg Taber">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="bt" placeholder="Buku Tabungan">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="tsulamrp" placeholder="Tambal Sulam">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="adm" placeholder="Biaya ADM">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="kegiatan" placeholder="Dana Kegiatan">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="tadm" placeholder="Total Admin" readonly>
+                </div>
+                <div class="inputBox">
+                <input type="text" name="asuransi" placeholder="Asuransi">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="dropingrp" placeholder="Droping (Rp)">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="dropingpf" placeholder="Droping (PF)">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="pensukarela" placeholder="Penarikan Tabungan Sukarela">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="pengundurandiri" placeholder="Pencairan Pengunduran Diri">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="saldo" placeholder="Saldo">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="akpf" placeholder="Anggota Keluar (PF)">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="tspf" placeholder="Tambal Sulam (PF)">
+                </div>
+                <div class="inputBox">
+                <input type="text" name="rtpf" placeholder="Registrasi Taber (PF)">
+                </div>
+                <div class="inputBox">
+                <textarea name="keterangan" id="" placeholder="Abaikan jika tidak ada!"></textarea>
+                </div>
+                <div class="inputBox">
+                  <input type="submit" value="Simpan">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+<script src="autoNumeric.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    // script form to googlesheet
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyFiSWGwRC4xycLZyH8uxG5HCrzP7e4dXqeZsVjtcpJdzh7u4DVochwuViV-EEUhL4/exec'
+   const form = document.forms['cashflow-kbb']
+ 
+   form.addEventListener('submit', e => {
+     e.preventDefault()
+     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+       .then(response => console.log('Success!', response))
+       .catch(error => console.error('Error!', error.message))
+   })
+
+
+// script auto numeric
+document.querySelectorAll('.inputBox input[type=text]').forEach((e) => {
+   new AutoNumeric(e, {
+      decimalPlaces: '0',
+      // decimalCharacter: ',',
+      // digitGroupSeparator: '.'
+   });
+ });
+
+function hitungTotal(){
+    var ikhtiar = $('input[name="angikhtiar"]').val();
+    var individu = $('input[name="angindividu"]').val();
+    var jumlah = parseInt(ikhtiar) + parseInt(individu);
+    if(!isNaN(jumlah)){
+        $('input[name="tangsuran"]').val(jumlah);
+    }else{
+        $('input[name="tangsuran"]').val(0);
+    }
+}
+
+
+</script>
+</body>
+</html>
